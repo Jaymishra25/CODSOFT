@@ -1,0 +1,65 @@
+import random
+import string
+
+# Function to generate a strong password
+def generate_password(length, complexity=3):
+    if length < 4:
+        print("Password length should be at least 4 characters for security.")
+        return None
+    
+    # Define the possible characters based on complexity level
+    if complexity == 1:
+        characters = string.ascii_lowercase  # Lowercase only
+    elif complexity == 2:
+        characters = string.ascii_letters  # Lowercase and uppercase
+    elif complexity == 3:
+        characters = string.ascii_letters + string.digits  # Letters and digits
+    elif complexity == 4:
+        characters = string.ascii_letters + string.digits + string.punctuation  # Letters, digits, and symbols
+    else:
+        print("Invalid complexity level. Please choose a level between 1 and 4.")
+        return None
+
+    # Generate a random password from the available characters
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
+# Main function to run the password generator
+def main():
+    print("Welcome to the Password Generator!")
+
+    # User input for password length and complexity level
+    while True:
+        try:
+            length = int(input("Enter the desired length of the password (minimum 4 characters): "))
+            if length < 4:
+                print("Password length should be at least 4 characters. Please try again.")
+                continue
+            break
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+
+    print("\nSelect password complexity:")
+    print("1: Lowercase letters only")
+    print("2: Lowercase and uppercase letters")
+    print("3: Letters (uppercase and lowercase) and digits")
+    print("4: Letters, digits, and special characters (most complex)")
+
+    while True:
+        try:
+            complexity = int(input("Enter the complexity level (1, 2, 3, or 4): "))
+            if complexity in [1, 2, 3, 4]:
+                break
+            else:
+                print("Please choose a valid complexity level (1, 2, 3, or 4).")
+        except ValueError:
+            print("Invalid input! Please enter a number between 1 and 4.")
+
+    # Generate and display the password
+    password = generate_password(length, complexity)
+    if password:
+        print(f"\nGenerated Password: {password}")
+
+# Run the program
+if __name__ == "__main__":
+    main()
